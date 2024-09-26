@@ -1,9 +1,26 @@
 const data = require('../../fixtures/data.json')
 
 describe('Respond.io Login Test and Workflow API Test', () => { 
-
     beforeEach(() => {
-        cy.login(data.validEmail,data.validPassword);
+        // cy.login(data.validEmail,data.validPassword);
+        const user = {
+            email: data.validEmail,
+            password: data.validPassword
+        };
+    
+        cy.request({
+            method: 'POST',
+            url: 'https://app.respond.io/auth/login',
+            body: user,
+        })
+        .then((response) => {
+            expect(response.status).to.equal(200); // Assert status code
+            expect(response.body.status).to.equal('success'); // Assert response body
+    
+            // Store idToken for later use
+            const idToken = response.body.data.idToken;
+            cy.wrap(idToken).as('idToken');
+        });
     });
 
     it('should add workflow successfully', () => {
@@ -18,6 +35,9 @@ describe('Respond.io Login Test and Workflow API Test', () => {
             url: 'https://app.respond.io/api/v2/workflows/add',
             headers: {
                 Authorization: `Bearer ${idToken}`, // Include retrieved idToken
+                Accept: 'application/json; charset=utf-8',
+                // Content-length: 352,
+                Baggage: 'sentry-environment=prod,sentry-release=91f7867e14a7a77b47412f3a4d2a94757f48919d,sentry-public_key=763ba9cb115448a3a0a4ab04a668a4f8,sentry-trace_id=76ef83d3cfd140f8886cacf306b99d1d,sentry-sample_rate=0.025,sentry-transaction=%2Fspace%2F%3Cdigits%3E%2Fworkflows,sentry-sampled=false'
             },
             body: workflowData,
             })

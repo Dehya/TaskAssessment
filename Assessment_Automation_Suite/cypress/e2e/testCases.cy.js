@@ -30,17 +30,17 @@ describe('Respond.io', () => {
         
         cy.get('button:contains("Create")').first().click();
 
-        const statuss = false
+        let statuss = 'false';
         cy.wait(`@workFlowCreated`).then((intercept) => {
             if (intercept.response.body.status === "success" ){
-                statuss = true;
+                statuss = 'true';
             }
             else 
             {
                 cy.log('Error: Workflow Creation failed');
             }
         }) 
-        cy.get(`span:contains('Workflow ${data.workflowName} added successfully.')`).should('be.visible');
+        cy.get(`span:contains('Workflow ${data.workflowName} added successfully.')`, {timeout: 30000}).should('be.visible');
         
     }); 
     

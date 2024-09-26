@@ -42,5 +42,5 @@ Cypress.Commands.add('login', (email, password) => {
         // Store idToken for later use
         const idToken = response.body.data.idToken;
         cy.wrap(idToken).as('idToken');
-    })
+    });
  });

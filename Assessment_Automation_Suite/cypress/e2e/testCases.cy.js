@@ -8,7 +8,7 @@ describe('Respond.io', () => {
 
         cy.get('#input-7').type(data.validEmail);
         cy.get('#input-9').type(data.validPassword);
-        cy.contain('button',"Sign in").first().click();
+        cy.get('button:contains("Sign in")').first().click();
     });
     
     // First Test Case - Assertion to check if the User is logged in by checking the URL and seeing if the /dashboard is included in it. 
@@ -21,17 +21,21 @@ describe('Respond.io', () => {
     it('Add Workflow from Scratch', () => {
         cy.get('[href="/space/250699/workflows"] > .v-list-item__append').should('be.visible').click();
         cy.get('#radix-vue-dropdown-menu-trigger-1 > .v-btn').should('be.visible').click();
-        cy.contain('span','Start From Scratch').should('be.visible').first().click();
+        cy.get('span:contains("Start From Scratch")').should('be.visible').first().click();
         cy.get('input[name="field_8').type(data.workflowName);
         cy.get('input[name="field_9"').type(data.workFlowDesc);
 
         
-        cy.contain('button','Create').first().click();
+        cy.get('button:contains("Create")').first().click();
 
         const statuss = false
         cy.wait(`@workFlowCreated`).then((intercept) => {
             if (intercept.response.body.status === "success" ){
                 statuss = true;
+            }
+            else 
+            {
+                cy.log('Error: Workflow Creation failed');
             }
         }) 
         cy.wait(`span:contains('Workflow ${data.workflowName} added successfully.')`).should('be.visible');
@@ -42,15 +46,17 @@ describe('Respond.io', () => {
     it('Not able to Add Workflow from Scratch', () => {
         cy.get('[href="/space/250699/workflows"] > .v-list-item__append').should('be.visible').click();
         cy.get('#radix-vue-dropdown-menu-trigger-1 > .v-btn').should('be.visible').click();
-        cy.contain('span','Start From Scratch').should('be.visible').first().click();
+        cy.get('span:contains("Start From Scratch")').should('be.visible').first().click();
         cy.get('input[name="field_8').type(data.workflowName);
         cy.get('input[name="field_9"').type(data.workFlowDesc);
 
         cy.intercept('POST', '/api/v2/workflows/add').as('workFlowCreated'); 
-        cy.contain('button','Create').first().click();
+        cy.get('button:contains("Create")').first().click();
 
-        cy.wait(`span:contains("Sorry there is already a workflow with this name!")`).should('be.visible');
+        cy.wait(`span:contains("Sorry there is already a workflow with this name!")`, {timeout: 30000}).should('be.visible');
     });  
+
+
 
 });
 

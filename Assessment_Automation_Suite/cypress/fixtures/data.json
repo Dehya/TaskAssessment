@@ -1,0 +1,8 @@
+{
+    "validEmail": "dehyakamranrao@gmail.com",
+    "validPassword": "Abf747!@#",
+    "invalidEmail": "dehyakamranrao",
+    "invalidPassword": "Abcd@12345",
+    "workflowName": "TestWorkflow13",
+    "workFlowDesc": "TestDescription5"
+}

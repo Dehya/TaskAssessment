@@ -11,8 +11,7 @@ module.exports = defineConfig({
     defaultCommandTimeout: 20000,
     // reporter: "cypress-multi-reporters",
     // reporterOptions: {
-    //     "configFile": "reporter-config.js",
-    //     "enabledReporters": ["html", "json"]
+    //     "configFile": "cypress.json",
     // }
   },
   

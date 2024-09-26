@@ -1,0 +1,6 @@
+.gc-infinite-scroll__loader {
+  width: 100%;
+  padding: 60px 0 20px;
+  display: flex;
+  justify-content: center;
+}

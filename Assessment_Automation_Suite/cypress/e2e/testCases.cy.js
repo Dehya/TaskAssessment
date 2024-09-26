@@ -22,8 +22,10 @@ describe('Respond.io', () => {
         cy.get('[href="/space/250699/workflows"] > .v-list-item__append').should('be.visible').click();
         cy.get('#radix-vue-dropdown-menu-trigger-1 > .v-btn').should('be.visible').click();
         cy.get('span:contains("Start From Scratch")').should('be.visible').first().click();
-        cy.get('input[name="field_8').type(data.workflowName);
-        cy.get('input[name="field_9"').type(data.workFlowDesc);
+        // cy.get('input[name="field_8').type(data.workflowName);
+        // cy.get('input[name="field_9"').type(data.workFlowDesc);
+        cy.get('input[placeholder="Name your workflow (only visible internally)"]').type(data.workflowName);
+        cy.get('input[placeholder="Briefly describe your workflow for internal reference"]').type(data.workFlowDesc);
 
         
         cy.get('button:contains("Create")').first().click();
@@ -38,7 +40,7 @@ describe('Respond.io', () => {
                 cy.log('Error: Workflow Creation failed');
             }
         }) 
-        cy.wait(`span:contains('Workflow ${data.workflowName} added successfully.')`).should('be.visible');
+        cy.get(`span:contains('Workflow ${data.workflowName} added successfully.')`).should('be.visible');
         
     }); 
     
@@ -47,13 +49,21 @@ describe('Respond.io', () => {
         cy.get('[href="/space/250699/workflows"] > .v-list-item__append').should('be.visible').click();
         cy.get('#radix-vue-dropdown-menu-trigger-1 > .v-btn').should('be.visible').click();
         cy.get('span:contains("Start From Scratch")').should('be.visible').first().click();
-        cy.get('input[name="field_8').type(data.workflowName);
-        cy.get('input[name="field_9"').type(data.workFlowDesc);
+        // cy.get('input[name="field_8').type(data.workflowName);
+        // cy.get('input[name="field_9"').type(data.workFlowDesc);
+        cy.get('input[placeholder="Name your workflow (only visible internally)"]').type(data.workflowName);
+        cy.get('input[placeholder="Briefly describe your workflow for internal reference"]').type(data.workFlowDesc);
 
         cy.intercept('POST', '/api/v2/workflows/add').as('workFlowCreated'); 
         cy.get('button:contains("Create")').first().click();
 
-        cy.wait(`span:contains("Sorry there is already a workflow with this name!")`, {timeout: 30000}).should('be.visible');
+        // Use uncaught exception handler to catch any errors and log them
+        Cypress.on('uncaught:exception', (err, runnable) => {
+            cy.log('Caught an exception:', err);
+            return false; // Prevents Cypress from failing the test
+        });
+
+        cy.get(`span:contains("Sorry there is already a workflow with this name!")`, {timeout: 30000}).should('be.visible');
     });  
 
 

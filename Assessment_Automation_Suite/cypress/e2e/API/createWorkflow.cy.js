@@ -1,4 +1,3 @@
-// const { expect } = require('chai'); // Import chai assertions
 const data = require('../../fixtures/data.json')
 
 describe('Respond.io Login Test and Workflow API Test', () => { 

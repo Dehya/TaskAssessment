@@ -21,12 +21,12 @@ describe('Respond.io', () => {
     it('Add Workflow from Scratch', () => {
         cy.get('[href="/space/250699/workflows"] > .v-list-item__append').should('be.visible').click();
         cy.get('#radix-vue-dropdown-menu-trigger-1 > .v-btn').should('be.visible').click();
-        cy.get('span:contains("Start From Scratch")').should('be.visible').first().click();
+        cy.contain('span','Start From Scratch').should('be.visible').first().click();
         cy.get('input[name="field_8').type(data.workflowName);
         cy.get('input[name="field_9"').type(data.workFlowDesc);
 
         
-        cy.get('button:contains("Create")').first().click();
+        cy.contain('button','Create').first().click();
 
         const statuss = false
         cy.wait(`@workFlowCreated`).then((intercept) => {
@@ -42,7 +42,7 @@ describe('Respond.io', () => {
     it('Not able to Add Workflow from Scratch', () => {
         cy.get('[href="/space/250699/workflows"] > .v-list-item__append').should('be.visible').click();
         cy.get('#radix-vue-dropdown-menu-trigger-1 > .v-btn').should('be.visible').click();
-        cy.get('span:contains("Start From Scratch")').should('be.visible').first().click();
+        cy.contain('span','Start From Scratch').should('be.visible').first().click();
         cy.get('input[name="field_8').type(data.workflowName);
         cy.get('input[name="field_9"').type(data.workFlowDesc);
 

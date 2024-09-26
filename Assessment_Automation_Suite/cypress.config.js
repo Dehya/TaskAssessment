@@ -6,7 +6,7 @@ module.exports = defineConfig({
   e2e: {
     setupNodeEvents(on, config) {},
     baseUrl: 'https://app.respond.io',
-    specPattern: 'e2e/',
+    specPattern: 'cypress/e2e',
     supportFile: false,
     defaultCommandTimeout: 20000,
     // reporter: "cypress-multi-reporters",
